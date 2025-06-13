@@ -10,6 +10,9 @@ interface Provedor {
 }
 
 const CreateDemand = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [tipo, setTipo] = useState("");
@@ -19,7 +22,7 @@ const CreateDemand = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3333/providers")
+    fetch(`${BASE_URL}/providers`)
       .then((res) => res.json())
       .then((data) => setProvedores(data))
       .catch((err) => {
@@ -32,7 +35,7 @@ const CreateDemand = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3333/demands/create", {
+      const res = await fetch(`${BASE_URL}/demands/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ titulo, descricao, tipo, provedorId: Number(provedorId) }),

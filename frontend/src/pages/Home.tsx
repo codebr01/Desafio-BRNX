@@ -60,6 +60,8 @@ const getStatusClasses = (status: string) => {
 
 const Home = () => {
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [demandas, setDemandas] = useState<Demanda[]>([]);
   const [provedores, setProvedores] = useState<Provedor[]>([]);
   const [statusSelecionado, setStatusSelecionado] = useState<string>("");
@@ -72,11 +74,12 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const demandasRes = await fetch("http://localhost:3333/");
+
+        const demandasRes = await fetch(`${BASE_URL}`);
         if (!demandasRes.ok) throw new Error("Erro ao buscar demandas");
         const demandasData = await demandasRes.json();
 
-        const provedoresRes = await fetch("http://localhost:3333/providers");
+        const provedoresRes = await fetch(`${BASE_URL}/providers`);
         if (!provedoresRes.ok) throw new Error("Erro ao buscar provedores");
         const provedoresData = await provedoresRes.json();
 

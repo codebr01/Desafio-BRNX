@@ -5,13 +5,16 @@ import DescriptionModal from "../components/actions/DescriptionModal";
 import type { AcaoTecnica } from "../types";
 
 const Actions = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [acoes, setAcoes] = useState<AcaoTecnica[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
   const [descricaoAberta, setDescricaoAberta] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3333/actions/history")
+    fetch(`${BASE_URL}/actions/history`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar ações técnicas");
         return res.json();

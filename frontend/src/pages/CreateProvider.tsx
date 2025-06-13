@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const CreateProvider = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [responsavel, setResponsavel] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -13,7 +16,7 @@ const CreateProvider = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3333/providers/create", {
+      const res = await fetch(`${BASE_URL}/providers/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

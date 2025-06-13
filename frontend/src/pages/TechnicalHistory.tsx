@@ -41,6 +41,9 @@ const getStatusClasses = (status: string) => {
 };
 
 const TechnicalHistory = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [demandas, setDemandas] = useState<Demanda[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
@@ -49,7 +52,7 @@ const TechnicalHistory = () => {
   const [novoStatus, setNovoStatus] = useState<string>("");
 
   useEffect(() => {
-    fetch("http://localhost:3333/")
+    fetch(`${BASE_URL}/`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar demandas");
         return res.json();
@@ -73,7 +76,7 @@ const TechnicalHistory = () => {
   const salvarAlteracoes = async () => {
     if (!demandaSelecionada) return;
     try {
-      const res = await fetch(`http://localhost:3333/demands/${demandaSelecionada.id}`, {
+      const res = await fetch(`${BASE_URL}/demands/${demandaSelecionada.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: novoStatus })

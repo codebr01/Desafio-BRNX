@@ -11,12 +11,15 @@ interface Provedor {
 }
 
 const Providers = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [provedores, setProvedores] = useState<Provedor[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3333/providers")
+    fetch(`${BASE_URL}/providers`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar provedores");
         return res.json();

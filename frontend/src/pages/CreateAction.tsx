@@ -12,6 +12,9 @@ interface Demanda {
 }
 
 const CreateAction = () => {
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL_API;
+
   const [demandas, setDemandas] = useState<Demanda[]>([]);
   const [descricao, setDescricao] = useState("");
   const [tecnico, setTecnico] = useState("");
@@ -21,7 +24,7 @@ const CreateAction = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3333/")
+    fetch(`${BASE_URL}/`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar demandas");
         return res.json();
@@ -39,7 +42,7 @@ const CreateAction = () => {
 
       console.log(demandaId);
 
-      const res = await fetch("http://localhost:3333/actions/create", {
+      const res = await fetch(`${BASE_URL}/actions/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ descricao, tecnico, demandaId }),
