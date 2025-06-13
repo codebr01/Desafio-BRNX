@@ -1,0 +1,113 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FormField } from "../components/home/FormField";
+import { TextAreaField } from "../components/home/TextAreaField";
+import { SelectField } from "../components/home/SelectField";
+
+interface Provedor {
+  id: number;
+  nomeFantasia: string;
+}
+
+const CreateDemand = () => {
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [provedorId, setProvedorId] = useState("");
+  const [provedores, setProvedores] = useState<Provedor[]>([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("http://localhost:3333/providers")
+      .then((res) => res.json())
+      .then((data) => setProvedores(data))
+      .catch((err) => {
+        console.error("Erro ao buscar provedores:", err);
+        alert("Erro ao carregar lista de provedores");
+      });
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:3333/demands/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo, descricao, tipo, provedorId: Number(provedorId) }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Erro ao criar demanda");
+        return;
+      }
+
+      alert("Demanda criada com sucesso!");
+      navigate("/demands");
+    } catch (error) {
+      console.error("Erro ao enviar dados:", error);
+      alert("Erro ao criar demanda");
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto bg-white shadow-2xl rounded-lg p-8 mt-10">
+      <Link to="/demands" className="text-blue-600 hover:underline mb-4 text-sm inline-block">
+        ← Voltar
+      </Link>
+
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Nova Demanda</h2>
+
+      <form onSubmit={handleSubmit}>
+        <FormField
+          label="Título"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+          placeholder="Tópico do problema"
+        />
+
+        <TextAreaField
+          label="Descrição"
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          placeholder="Descreva o problema em detalhes"
+        />
+
+        <SelectField
+          label="Tipo"
+          value={tipo}
+          onChange={(e) => setTipo(e.target.value)}
+          options={[
+            { value: "DIAGNOSTICO", label: "Diagnóstico" },
+            { value: "MANUTENCAO", label: "Manutenção" },
+            { value: "CONFIGURACAO", label: "Configuração" },
+            { value: "INSTALACAO", label: "Instalação" },
+            { value: "OUTRO", label: "Outro" },
+          ]}
+        />
+
+        <SelectField
+          label="Provedor"
+          value={provedorId}
+          onChange={(e) => setProvedorId(e.target.value)}
+          options={provedores.map((p) => ({
+            value: p.id.toString(),
+            label: p.nomeFantasia,
+          }))}
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md"
+        >
+          Criar Demanda
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default CreateDemand;
