@@ -52,7 +52,7 @@ const TechnicalHistory = () => {
   const [novoStatus, setNovoStatus] = useState<string>("");
 
   useEffect(() => {
-    fetch(`${BASE_URL}/`)
+    fetch(`${BASE_URL}/demands`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar demandas");
         return res.json();
@@ -117,8 +117,19 @@ const TechnicalHistory = () => {
       {erro && <p className="text-red-600">{erro}</p>}
 
       {!carregando && !erro && (
-        <DemandTable demandas={demandas} onEditar={abrirModal} formatTipo={formatTipo} formatStatus={formatStatus} getStatusClasses={getStatusClasses} />
+        demandas.length > 0 ? (
+          <DemandTable
+            demandas={demandas}
+            onEditar={abrirModal}
+            formatTipo={formatTipo}
+            formatStatus={formatStatus}
+            getStatusClasses={getStatusClasses}
+          />
+        ) : (
+          <p className="text-gray-600 text-center mt-6">Não há demandas cadastradas.</p>
+        )
       )}
+
 
       {modalAberto && demandaSelecionada && (
         <StatusModal demanda={demandaSelecionada} novoStatus={novoStatus} setNovoStatus={setNovoStatus} fecharModal={fecharModal} salvarAlteracoes={salvarAlteracoes} formatTipo={formatTipo} />

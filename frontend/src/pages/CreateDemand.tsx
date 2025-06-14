@@ -104,10 +104,15 @@ const CreateDemand = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md"
+          disabled={provedores.length === 0}
+          className={`w-full font-semibold py-2 px-4 rounded-md transition ${provedores.length === 0
+              ? "bg-gray-400 cursor-not-allowed text-white"
+              : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
         >
           Criar Demanda
         </button>
+
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export function listDemands(app: FastifyInstance) {
-  app.get("/", async (request, reply) => {
+  app.get("/demands", async (request, reply) => {
     try {
       const demandas = await prisma.demanda.findMany({
         include: {

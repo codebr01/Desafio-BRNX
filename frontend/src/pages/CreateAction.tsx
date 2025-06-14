@@ -24,7 +24,7 @@ const CreateAction = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${BASE_URL}/`)
+    fetch(`${BASE_URL}/demands`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao buscar demandas");
         return res.json();
@@ -52,7 +52,7 @@ const CreateAction = () => {
 
       navigate("/actions");
     } catch (error) {
-      console.error(error); 
+      console.error(error);
       alert("Erro ao cadastrar ação técnica.");
     }
   };
@@ -102,7 +102,7 @@ const CreateAction = () => {
               <option value="">Selecione uma demanda</option>
               {demandas.map((d) => (
                 <option key={d.id} value={d.id}>
-                # {d.id} | {d.titulo} | ({d.tipo}) | {d.provedor.nomeFantasia}
+                  # {d.id} | {d.titulo} | ({d.tipo}) | {d.provedor.nomeFantasia}
                 </option>
               ))}
             </select>
@@ -110,10 +110,15 @@ const CreateAction = () => {
 
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            disabled={demandas.length === 0}
+            className={`px-4 py-2 rounded text-white transition ${demandas.length === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700'
+              }`}
           >
             Registrar Ação Técnica
           </button>
+
         </form>
       )}
     </div>

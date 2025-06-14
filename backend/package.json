@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "migrate": "prisma migrate deploy",
+    "db:deploy": "npx prisma migrate deploy && npx prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^24.0.1",
     "prisma": "^6.9.0",
@@ -17,6 +21,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.8.0",
     "@fastify/cors": "^11.0.1",
     "@prisma/client": "^6.9.0",
     "dotenv": "^16.5.0",

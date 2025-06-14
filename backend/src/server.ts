@@ -27,6 +27,6 @@ app.register(listActions);
 app.register(updateDemandStatus);
 app.register(createAction);
 
-app.listen({ port }).then(() => {
+app.listen({ port, host: '0.0.0.0' }).then(() => {
   console.log(`Ouvindo em http://localhost:${port}/`);
 });

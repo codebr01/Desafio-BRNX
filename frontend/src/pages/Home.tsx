@@ -75,7 +75,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
 
-        const demandasRes = await fetch(`${BASE_URL}`);
+        const demandasRes = await fetch(`${BASE_URL}/demands`);
         if (!demandasRes.ok) throw new Error("Erro ao buscar demandas");
         const demandasData = await demandasRes.json();
 
