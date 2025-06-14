@@ -1,4 +1,4 @@
-# 💼 Desafio BRNX – CodeBR01
+# 💼 Desafio BRNX
 
 Sistema de gerenciamento de demandas técnicas com backend em Fastify, banco de dados PostgreSQL via Prisma ORM e frontend em React + Vite e Tailwind CSS.
 
