@@ -4,14 +4,10 @@ Sistema de gerenciamento de demandas técnicas com backend em Fastify, banco de 
 
 ---
 
-## 🚀 Como rodar o projeto
-
 ### ✅ Pré-requisitos
 - 🐳 [Docker](https://www.docker.com/) instalado e em execução
 
 ---
-
-### 🛠️ Passo a passo
 
 #### 📥 1. Clone o repositório
 
@@ -19,13 +15,43 @@ Sistema de gerenciamento de demandas técnicas com backend em Fastify, banco de 
 git clone https://github.com/codebr01/Desafio-BRNX.git
 ```
 
-#### 📂 2. Acesse a pasta do projeto
+## ⚙️ Configurando variaveis de ambiente:
+
+### 🛠️ Passo a passo
+
+#### 1. Dentro da pasta do projeto "Desafio-BRNX", crie um arquivo .env com o mesmo conteudo do arquivo .env.example.
+
+```bash
+POSTGRES_DB=NOME_DO_SEU_BANCO_DE_DADOS
+POSTGRES_USER=SEU_USUARIO
+POSTGRES_PASSWORD=SUA_SENHA
+DATABASE_URL=postgresql://SEU_USUARIO:SUA_SENHA@db:5432/NOME_DO_SEU_BANCO_DE_DADOS?schema=public
+```
+
+#### 2. Depois, crie o arquivo .env dentro da basta "backend" com o mesmo conteudo do arquivo .env.example.
+
+```bash
+DATABASE_URL=postgresql://SEU_USUARIO:SUA_SENHA@db:5432/NOME_DO_SEU_BANCO_DE_DADOS?schema=public
+PORT=SUA_PORTA | Ex: 3333
+```
+
+#### 3. Por fim, crie o arquivo .env dentro da basta "frontend" com o mesmo conteudo do arquivo .env.example.
+
+```bash
+VITE_BASE_URL_API=http://localhost:PORTA_USADA_NO_ARQUIVO_USADO_NO_ENV_DO_BACKEND
+```
+
+## 🚀 Como rodar o projeto
+
+### 🛠️ Passo a passo
+
+#### 📂 1. Acesse a pasta do projeto
 
 ```bash
 cd Desafio-BRNX
 ```
 
-#### 🐋 3. Suba a aplicação com Docker
+#### 🐋 2. Suba a aplicação com Docker
 
 ```bash
 docker compose up --build
@@ -36,7 +62,6 @@ docker compose up --build
 ### 🌐 Acesse no navegador
 
 - 💻 Frontend: [http://localhost:5173/demands](http://localhost:5173/demands)
-- 🔧 Backend (API): [http://localhost:3333](http://localhost:3333)
 
 > 🧪 Dados de teste são gerados automaticamente via `prisma/seeder.ts` ao subir o container do backend.
 
