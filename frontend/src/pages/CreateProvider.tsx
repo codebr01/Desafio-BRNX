@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateProvider = () => {
-
   const BASE_URL = import.meta.env.VITE_BASE_URL_API;
 
   const [nomeFantasia, setNomeFantasia] = useState("");
@@ -24,22 +26,26 @@ const CreateProvider = () => {
         body: JSON.stringify({ nomeFantasia, responsavel, telefone, email }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const data = await res.json();
-        alert(data.error || "Erro ao criar provedor");
+        toast.error(data.error || "Erro ao criar provedor");
         return;
       }
 
-      alert("Provedor criado com sucesso!");
-      navigate("/demands");
+      toast.success("Provedor criado com sucesso!");
+      setTimeout(() => {
+        navigate("/demands");
+      }, 1500);
     } catch (err) {
       console.error(err);
-      alert("Erro ao enviar dados");
+      toast.error("Erro ao enviar dados");
     }
   };
 
   return (
     <div className="max-w-md mx-auto bg-white shadow-2xl rounded-lg p-8 mt-10">
+      <ToastContainer />
       <Link to="/demands" className="text-blue-600 hover:underline mb-4 text-sm inline-block">
         ← Voltar
       </Link>
@@ -48,9 +54,7 @@ const CreateProvider = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Nome Fantasia
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Nome Fantasia</label>
           <input
             type="text"
             value={nomeFantasia}
@@ -62,9 +66,7 @@ const CreateProvider = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Responsável
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Responsável</label>
           <input
             type="text"
             value={responsavel}
@@ -76,9 +78,7 @@ const CreateProvider = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Telefone
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
           <input
             type="tel"
             value={telefone}
@@ -90,9 +90,7 @@ const CreateProvider = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            E-mail
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
           <input
             type="email"
             value={email}

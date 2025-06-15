@@ -9,10 +9,10 @@ datasource db {
 
 model Provedor {
   id            Int       @id @default(autoincrement())
-  nomeFantasia  String
+  nomeFantasia  String    @unique
   responsavel   String
   telefone      String
-  email         String
+  email         String    @unique
   criadoEm      DateTime  @default(now())
 
   demandas      Demanda[]

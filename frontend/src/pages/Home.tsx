@@ -3,6 +3,8 @@ import { DemandHeader } from "../components/home/DemandHeader";
 import { DemandFilters } from "../components/home/DemandFilters";
 import { DemandTable } from "../components/home/DemandTable";
 import { DemandModal } from "../components/home/DemandModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 interface Demanda {
@@ -115,7 +117,7 @@ const Home = () => {
   return (
 
     <div className="p-6 bg-white rounded-xl shadow-2xl max-w-5xl mx-auto mt-10">
-
+      <ToastContainer />
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-3xl font-bold text-zinc-800">Listagem de Demandas</h1>
         <DemandFilters

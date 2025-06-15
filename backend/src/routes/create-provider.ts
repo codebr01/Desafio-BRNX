@@ -15,7 +15,6 @@ type CreateProviderBody = z.infer<typeof createProviderSchema>;
 
 export function createProvider(app: FastifyInstance) {
   app.post("/providers/create", async (request, reply) => {
-
     let data: CreateProviderBody;
 
     try {
@@ -30,6 +29,28 @@ export function createProvider(app: FastifyInstance) {
     const { nomeFantasia, responsavel, telefone, email } = data;
 
     try {
+      
+      const nomeDuplicado = await prisma.provedor.findUnique({
+        where: { nomeFantasia },
+      });
+
+      if (nomeDuplicado) {
+        return reply.status(409).send({
+          error: "Já existe um provedor com esse nome fantasia",
+        });
+      }
+
+      // Verifica e-mail duplicado
+      const emailDuplicado = await prisma.provedor.findUnique({
+        where: { email },
+      });
+
+      if (emailDuplicado) {
+        return reply.status(409).send({
+          error: "Já existe um provedor com esse e-mail",
+        });
+      }
+
       const novoProvedor = await prisma.provedor.create({
         data: {
           nomeFantasia,
